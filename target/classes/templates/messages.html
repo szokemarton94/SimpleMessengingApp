@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<!--same style list my messages -->
+<!--options to sort messages-->
+<head>
+    <meta charset="UTF-8">
+    <title>Messages</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01"
+            aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item ">
+                <a class="nav-link" data-th-href="@{/home}">HomePage</a>
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link" href="#" data-th-href="@{/messages}">Messages</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" data-th-href="@{/messages/new}">NewMessage</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" data-th-href="@{/topics/showAllTopics}">Topics</a>
+            </li>
+            <!--            <li class="nav-item ">-->
+            <!--                <a class="nav-link" href="#" data-th-href="@{/modifymessage}">ModifyMessage</a>-->
+            <!--            </li>-->
+        </ul>
+        <ul class="navbar-nav my-2 my-lg-0">
+            <li class="nav-item">
+                <a class="nav-link" href="#" data-sec-authorize="isAuthenticated()" th:href="@{/logout}">Logout</a>
+                <a class="nav-link" href="#" data-sec-authorize="!isAuthenticated()" th:href="@{/login}">Login</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<table>
+<!-- row containing the elements   -->
+    <tr> <!--defines a ROW of CELLs in a table-->
+        <td>MessageId</td> <!--defines a CELL of a table that contains data.-->
+        <td>Sender</td>
+        <td>Receiver</td>
+        <td>DateAndTime</td>
+        <td>Topic</td>
+        <td>Message</td>
+<!--        <td data-sec-authorize="hasRole('ADMIN')"> isDeleted</td>-->
+<!--        <td data-sec-authorize="hasRole('ADMIN')">Delete</td>-->
+    </tr>
+    <tr data-th-each="m: ${messageList}">
+        <td data-th-text="${m.messageId}"></td>
+        <td data-th-text="${m.sender}"></td>
+        <td data-th-text="${{m.receiver}}"></td>
+        <td data-th-text="${m.timeOfSend}"></td>
+        <td data-th-text="${m.topic}"></td>
+        <td data-th-text="${m.message}"></td>
+<!--        <td><a data-th-href="@{/show/{id}(id=${m.messageId})}">View message separately</a></td>-->
+<!--        <td><a data-th-text="${m.isFlaggedAsDeleted()}"></a></td>-->
+<!--        <td>-->
+<!--            <form th:action="@{/deleteMessage}"  method="post">-->
+<!--                <input type="hidden" th:value="${m.messageId}" name="messageToDelete"/>-->
+<!--                <button type="submit">Delete</button>-->
+<!--            </form>-->
+<!--        </td>-->
+    </tr>
+<!--    <tr  data-th-each="m: ${messageList}" th:if="${!m.isFlaggedAsDeleted()}">-->
+<!--        <td data-th-text="${m.messageId}"></td>-->
+<!--        <td data-th-text="${m.author}"></td>-->
+<!--        <td data-th-text="${{m.dateTime}}"></td>-->
+<!--        <td data-th-text="${m.message}"></td>-->
+<!--        <td data-th-text="${m.topic.topicName}"></td>-->
+<!--        <td><a data-th-href="@{/show/{id}(id=${m.messageId})}">View message separately</a></td>-->
+<!--    </tr>-->
+</table>
+</body>
+</html>
