@@ -1,5 +1,6 @@
 package application.controller;
 
+import application.service.Message;
 import application.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class MessageController {
@@ -31,8 +33,11 @@ public class MessageController {
      * Show all my messages
      */
     @RequestMapping(value = "/messages", method = RequestMethod.GET)
-    public String showMessages(Model model) {
-        model.addAttribute("messageList", messageService.getMessageList());
+    public String showMessages(
+            @RequestParam(value = "limit", name = "limit", required = false, defaultValue = "20")Integer limit,
+                    Model model) {
+
+        model.addAttribute("messageList", messageService.getArrangedMessageList(limit));
         return "messages";
     }
 

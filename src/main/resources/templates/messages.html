@@ -40,8 +40,32 @@
         </ul>
     </div>
 </nav>
-<table>
+<!--form to fill out-->
+    <form th:action="@{/messages}" method="get">
+        <table>
+        <tr>
+            <td>
+                <label for="limit" > <!--"for" - reference for "id"-->
+                <input type="number" id="limit" name="limit" value="20" aria-describedby="emailHelp">
+                </label>
+            </td>
+            <td>
+                <label for="orderBy">
+                <input type="text" id="orderBy" name = "orderBy" value="orderBy">
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <button type="submit" class="btn btn-primary">Search</button>
+            </td>
+        </tr>
+        </table>
+    </form>
+
+
 <!-- row containing the elements   -->
+<table>
     <tr> <!--defines a ROW of CELLs in a table-->
         <td>MessageId</td> <!--defines a CELL of a table that contains data.-->
         <td>Sender</td>
