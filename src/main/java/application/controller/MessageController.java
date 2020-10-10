@@ -17,7 +17,7 @@ public class MessageController {
 
     //Constructor
     @Autowired
-    public MessageController(MessageService messageService){
+    public MessageController(MessageService messageService) {
         this.messageService = messageService;
     }
 
@@ -25,6 +25,7 @@ public class MessageController {
     public MessageService getMessageService() {
         return messageService;
     }
+
     public void setMessageService(MessageService messageService) {
         this.messageService = messageService;
     }
@@ -34,10 +35,12 @@ public class MessageController {
      */
     @RequestMapping(value = "/messages", method = RequestMethod.GET)
     public String showMessages(
-            @RequestParam(value = "limit", name = "limit", required = false, defaultValue = "20")Integer limit,
-                    Model model) {
+            @RequestParam(value = "limit", name = "limit", required = false, defaultValue = "20") Integer limit,
+            @RequestParam(value = "orderBy", name = "orderBy", required = false, defaultValue = "date") String orderBy,
+            @RequestParam(value = "direction", name = "direction", required = false, defaultValue = "asc") String direction,
+            Model model) {
 
-        model.addAttribute("messageList", messageService.getArrangedMessageList(limit));
+        model.addAttribute("messageList", messageService.getArrangedMessageList(limit, orderBy, direction));
         return "messages";
     }
 
