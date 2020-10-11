@@ -1,3 +1,4 @@
 # SimpleMessagingApp
-A simple messaging application built with Spring Boot, 
+(Currently under development)
+A simple messaging application built with the Spring Framework, 
 for exercise purposes. 
