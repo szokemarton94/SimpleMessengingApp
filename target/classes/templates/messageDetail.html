@@ -15,15 +15,14 @@
         <td>Topic</td>
         <td>Message</td>
         <td>IsFlaggedAsDeleted</td>
-        <td>
-            <a th:href="@{/messages}">Back</a></td>
+        <td><a th:href="@{/messages}">Back</a></td>
     </tr>
     <tr>
         <td th:text="${message.messageId}"></td>
-        <td th:text="${message.sender}"></td>
-        <td th:text="${message.receiver}"></td>
-        <td th:text="${message.timeOfSend}"></td>
-        <td th:text="${message.topic}"></td>
+        <td th:text="${message.author}"></td>
+        <td th:text="${message.recipient}"></td>
+        <td th:text="${message.timeOfSending}"></td>
+        <td th:text="${message.subject}"></td>
         <td th:text="${message.message}"></td>
         <td th:text="${message.deleted}"></td>
     </tr>

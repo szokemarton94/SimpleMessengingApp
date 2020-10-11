@@ -1,6 +1,8 @@
 package application.service;
 
 
+import application.DTO.MessageDTO;
+import application.Message;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -54,6 +56,9 @@ public class MessageService {
         return messageList;
     }
 
+    /**
+     * Returns with "List<Message>" arranged by "arguments"
+     **/
     public List<Message> getArrangedMessageList(Integer limit, String orderBy, String direction) {
         List<Message> currentMessageList = getMessageList();
 
@@ -62,13 +67,6 @@ public class MessageService {
         return currentMessageList;
 
     }
-
-//    private List<Message> setDirection(String direction, List<Message> currentMessageList) {
-//
-//        if (direction.equals("asc")){
-//            return currentMessageList.stream().sorted(Comparator.naturalOrder())
-//        }
-//    }
 
     private List<Message> setValueOrderBy(String orderBy, String direction, List<Message> currentMessageList) {
         Comparator<Message> comparing = orderByComparator(orderBy);
@@ -82,10 +80,12 @@ public class MessageService {
                     .stream()
                     .sorted(comparing.reversed())
                     .collect(Collectors.toList());
-        } else { return currentMessageList
-                .stream()
-                .sorted(comparing)
-                .collect(Collectors.toList());}
+        } else {
+            return currentMessageList
+                    .stream()
+                    .sorted(comparing)
+                    .collect(Collectors.toList());
+        }
     }
 
     private List<Message> limitReturnList(Integer limit, List<Message> listToLimit) {
@@ -95,31 +95,41 @@ public class MessageService {
                 .collect(Collectors.toList());
     }
 
-
     private Comparator<Message> orderByComparator(String orderBy) {
         switch (orderBy) {
             case "date":
-                return Comparator.comparing(Message::getTimeOfSend);
+                return Comparator.comparing(Message::getTimeOfSending);
             case "author":
-                return Comparator.comparing(Message::getSender);
+                return Comparator.comparing(Message::getAuthor);
             case "receiver":
-                return Comparator.comparing(Message::getReceiver);
+                return Comparator.comparing(Message::getRecipient);
             case "message":
                 return Comparator.comparing(Message::getMessage);
             case "topic":
-                return Comparator.comparing(Message::getTopic);
+                return Comparator.comparing(Message::getSubject);
             case "messageId":
                 return Comparator.comparing(Message::getMessageId);
         }
-        return Comparator.comparing(Message::getTimeOfSend);
+        return Comparator.comparing(Message::getTimeOfSending);
     }
 
+    /**
+     * Returns with selected "Message" from DB by "messageId"
+     **/
     public Message showSelectedMessage(Long messageId) {
         for (Message message : messageList) {
-            if (message.getMessageId().equals(messageId)){
+            if (message.getMessageId().equals(messageId)) {
                 return message;
             }
         }
         return null;
+    }
+
+    /**
+     * Add a new Message to DataBase
+     **/
+    public void addNewMessageToDataBase(MessageDTO messageDTO) {
+        Message messageToAdd = new Message(messageDTO);
+        this.messageList.add(messageToAdd);
     }
 }

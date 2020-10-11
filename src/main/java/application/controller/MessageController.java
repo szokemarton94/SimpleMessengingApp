@@ -1,15 +1,11 @@
 package application.controller;
 
-import application.service.Message;
+import application.DTO.MessageDTO;
 import application.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class MessageController {
@@ -54,5 +50,26 @@ public class MessageController {
             model.addAttribute("message", messageService.showSelectedMessage(messageId));
             return "messageDetail";
     }
+
+    /**
+     * Show "NewMessage" page
+     */
+    @RequestMapping(value="/messages/new", method = RequestMethod.GET)
+    public String showNewMessage(
+            @ModelAttribute("messageDTO") MessageDTO messageDTO
+    ){
+        return "newMessage";
+    }
+    /**
+     * Add new Message to DB
+     */
+    @RequestMapping(value = "/messages/new/add", method = RequestMethod.POST)
+    public String addNewMessageToDataBase(
+            @ModelAttribute MessageDTO messageDto
+    ){
+        messageService.addNewMessageToDataBase(messageDto);
+        return "redirect:/messages";
+    }
+
 
 }

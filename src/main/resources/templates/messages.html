@@ -17,9 +17,10 @@
     <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
             <li class="nav-item ">
-                <a class="nav-link" data-th-href="@{/home}">HomePage</a>
+                <a class="nav-link" data-th-href="@{/home}">Home</a>
             </li>
             <li class="nav-item ">
+                <!--TODO: MyMessages-->
                 <a class="nav-link" href="#" data-th-href="@{/messages}">Messages</a>
             </li>
             <li class="nav-item">
@@ -45,26 +46,31 @@
     <table>
         <tr>
             <td>
-                <label for="limit"> <!--"for" - reference for "id"-->
+                <label for="limit"> Limit<!--"for" - reference for "id"-->
                     <input type="number" id="limit" name="limit">
-                </label>
-            </td>
-            <td>
-                <label for="orderBy">
-                    <input type="text" id="orderBy" name="orderBy">
-                </label>
-            </td>
-            <td>
-                <label for="direction">
-                    <input type="text" id="direction" name="direction">
                 </label>
             </td>
         </tr>
         <tr>
             <td>
-                <button type="submit" class="btn btn-primary">Search</button>
+            <label for="orderBy">OrderByValue
+                <input type="text" id="orderBy" name="orderBy">
+            </label>
             </td>
         </tr>
+        <tr>
+            <td>
+            <label for="direction">Direction
+                <input type="text" id="direction" name="direction">
+            </label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+            <button type="submit" class="btn btn-primary">Search</button>
+            </td>
+        </tr>
+
     </table>
 </form>
 
@@ -83,21 +89,21 @@
     </tr>
     <tr data-th-each="m: ${messageList}">
         <td data-th-text="${m.messageId}"></td>
-        <td data-th-text="${m.sender}"></td>
-        <td data-th-text="${m.receiver}"></td>
-        <td data-th-text="${m.timeOfSend}"></td>
-        <td data-th-text="${m.topic}"></td>
+        <td data-th-text="${m.author}"></td>
+        <td data-th-text="${m.recipient}"></td>
+        <td data-th-text="${m.timeOfSending}"></td>
+        <td data-th-text="${m.subject}"></td>
         <td data-th-text="${m.message}"></td>
         <td data-th-text="${m.deleted}"></td>
         <td><a data-th-href="@{messages/{messageId}(messageId = ${m.messageId})}">View message Details
-        <!--        <td><a data-th-href="@{/show/{id}(id=${m.messageId})}">View message separately</a></td>-->
-        <!--        <td><a data-th-text="${m.isFlaggedAsDeleted()}"></a></td>-->
-        <!--        <td>-->
-        <!--            <form th:action="@{/deleteMessage}"  method="post">-->
-        <!--                <input type="hidden" th:value="${m.messageId}" name="messageToDelete"/>-->
-        <!--                <button type="submit">Delete</button>-->
-        <!--            </form>-->
-        <!--        </td>-->
+            <!--        <td><a data-th-href="@{/show/{id}(id=${m.messageId})}">View message separately</a></td>-->
+            <!--        <td><a data-th-text="${m.isFlaggedAsDeleted()}"></a></td>-->
+            <!--        <td>-->
+            <!--            <form th:action="@{/deleteMessage}"  method="post">-->
+            <!--                <input type="hidden" th:value="${m.messageId}" name="messageToDelete"/>-->
+            <!--                <button type="submit">Delete</button>-->
+            <!--            </form>-->
+            <!--        </td>-->
     </tr>
     <!--    <tr  data-th-each="m: ${messageList}" th:if="${!m.isFlaggedAsDeleted()}">-->
     <!--        <td data-th-text="${m.messageId}"></td>-->
