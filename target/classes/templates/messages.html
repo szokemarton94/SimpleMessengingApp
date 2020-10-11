@@ -84,10 +84,12 @@
     <tr data-th-each="m: ${messageList}">
         <td data-th-text="${m.messageId}"></td>
         <td data-th-text="${m.sender}"></td>
-        <td data-th-text="${{m.receiver}}"></td>
+        <td data-th-text="${m.receiver}"></td>
         <td data-th-text="${m.timeOfSend}"></td>
         <td data-th-text="${m.topic}"></td>
         <td data-th-text="${m.message}"></td>
+        <td data-th-text="${m.deleted}"></td>
+        <td><a data-th-href="@{messages/{messageId}(messageId = ${m.messageId})}">View message Details
         <!--        <td><a data-th-href="@{/show/{id}(id=${m.messageId})}">View message separately</a></td>-->
         <!--        <td><a data-th-text="${m.isFlaggedAsDeleted()}"></a></td>-->
         <!--        <td>-->

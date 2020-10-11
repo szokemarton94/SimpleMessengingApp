@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -47,9 +48,11 @@ public class MessageController {
     /**
      * Show selected message
      */
-    @RequestMapping(value = "/messages/{}", method = RequestMethod.GET)
-    public String showMessageDetails() {
-        return null;
+    @RequestMapping(value = "/messages/{messageId}", method = RequestMethod.GET)
+    public String showMessageDetails(
+        @PathVariable("messageId") Long messageId, Model model){
+            model.addAttribute("message", messageService.showSelectedMessage(messageId));
+            return "messageDetail";
     }
 
 }

@@ -10,6 +10,7 @@ public class Message {
     private LocalDateTime timeOfSend;
     private String message;
     private String topic;
+    private Boolean isDeleted;
 
     //Constructor
     public Message(Long messageId, String sender, String receiver, LocalDateTime timeOfSend, String message, String topic ){
@@ -19,6 +20,7 @@ public class Message {
         this.timeOfSend = timeOfSend;
         this.message = message;
         this.topic=topic;
+        this.isDeleted=false;
     }
 
     //Getter and Setter functions
@@ -62,5 +64,12 @@ public class Message {
     }
     public void setTopic(String topic) {
         this.topic = topic;
+    }
+
+    public Boolean getDeleted() {
+        return isDeleted;
+    }
+    public void setDeleted(Boolean deleted) {
+        isDeleted = deleted;
     }
 }

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MessageDetails</title>
+</head>
+<body>
+<h2>Message Details:</h2>
+<table>
+    <tr>
+        <td>MessageID</td>
+        <td>Author</td>
+        <td>Receiver</td>
+        <td>TimeOfSent</td>
+        <td>Topic</td>
+        <td>Message</td>
+        <td>IsFlaggedAsDeleted</td>
+        <td>
+            <a th:href="@{/messages}">Back</a></td>
+    </tr>
+    <tr>
+        <td th:text="${message.messageId}"></td>
+        <td th:text="${message.sender}"></td>
+        <td th:text="${message.receiver}"></td>
+        <td th:text="${message.timeOfSend}"></td>
+        <td th:text="${message.topic}"></td>
+        <td th:text="${message.message}"></td>
+        <td th:text="${message.deleted}"></td>
+    </tr>
+</table>
+</body>
+</html>

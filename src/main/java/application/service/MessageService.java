@@ -32,25 +32,25 @@ public class MessageService {
     private List<Message> messageListCreator() {
         List<Message> messageList = new ArrayList<>();
         messageList.add(new Message(1L, "user1", "user2", LocalDateTime.of(2020, 10, 8, 22, 19), "Hello world!", "null"));
-        messageList.add(new Message(1L, "user2", "user1", LocalDateTime.of(2020, 10, 8, 22, 25), "Good bye world!", "null"));
-        messageList.add(new Message(1L, "user3", "user2", LocalDateTime.of(2020, 10, 8, 22, 19), "Hello world!", "null"));
-        messageList.add(new Message(1L, "user4", "user1", LocalDateTime.of(2020, 10, 8, 22, 25), "Good bye world!", "null"));
-        messageList.add(new Message(1L, "user5", "user2", LocalDateTime.of(2020, 10, 8, 22, 19), "Hello world!", "null"));
-        messageList.add(new Message(1L, "user6", "user1", LocalDateTime.of(2020, 10, 8, 22, 25), "Good bye world!", "null"));
-        messageList.add(new Message(1L, "user7", "user2", LocalDateTime.of(2020, 10, 8, 22, 19), "Hello world!", "null"));
-        messageList.add(new Message(1L, "user2", "user1", LocalDateTime.of(2020, 10, 8, 22, 25), "Good bye world!", "null"));
-        messageList.add(new Message(1L, "user1", "user2", LocalDateTime.of(2020, 10, 8, 22, 19), "Hello world!", "null"));
-        messageList.add(new Message(1L, "user2", "user1", LocalDateTime.of(2020, 10, 8, 22, 25), "Good bye world!", "null"));
-        messageList.add(new Message(1L, "user1", "user2", LocalDateTime.of(2020, 10, 8, 22, 19), "Hello world!", "null"));
-        messageList.add(new Message(1L, "user2", "user1", LocalDateTime.of(2020, 10, 8, 22, 25), "Good bye world!", "null"));
-        messageList.add(new Message(1L, "user1", "user2", LocalDateTime.of(2020, 10, 8, 22, 19), "Hello world!", "null"));
-        messageList.add(new Message(1L, "user2", "user1", LocalDateTime.of(2020, 10, 8, 22, 25), "Good bye world!", "null"));
-        messageList.add(new Message(1L, "user1", "user2", LocalDateTime.of(2020, 10, 8, 22, 19), "Hello world!", "null"));
-        messageList.add(new Message(1L, "user2", "user1", LocalDateTime.of(2020, 10, 8, 22, 25), "Good bye world!", "null"));
-        messageList.add(new Message(1L, "user1", "user2", LocalDateTime.of(2020, 10, 8, 22, 19), "Hello world!", "null"));
-        messageList.add(new Message(1L, "user2", "user1", LocalDateTime.of(2020, 10, 8, 22, 25), "Good bye world!", "null"));
-        messageList.add(new Message(1L, "user1", "user2", LocalDateTime.of(2020, 10, 8, 22, 19), "Hello world!", "null"));
-        messageList.add(new Message(1L, "user2", "user1", LocalDateTime.of(2020, 10, 8, 22, 25), "Good bye world!", "null"));
+        messageList.add(new Message(2L, "user2", "user1", LocalDateTime.of(2020, 10, 8, 22, 25), "Good bye world!", "null"));
+        messageList.add(new Message(3L, "user3", "user2", LocalDateTime.of(2020, 10, 8, 22, 19), "Hello world!", "null"));
+        messageList.add(new Message(4L, "user4", "user1", LocalDateTime.of(2020, 10, 8, 22, 25), "Good bye world!", "null"));
+        messageList.add(new Message(5L, "user5", "user2", LocalDateTime.of(2020, 10, 8, 22, 19), "Hello world!", "null"));
+        messageList.add(new Message(6L, "user6", "user1", LocalDateTime.of(2020, 10, 8, 22, 25), "Good bye world!", "null"));
+        messageList.add(new Message(7L, "user7", "user2", LocalDateTime.of(2020, 10, 8, 22, 19), "Hello world!", "null"));
+        messageList.add(new Message(8L, "user2", "user1", LocalDateTime.of(2020, 10, 8, 22, 25), "Good bye world!", "null"));
+        messageList.add(new Message(9L, "user1", "user2", LocalDateTime.of(2020, 10, 8, 22, 19), "Hello world!", "null"));
+        messageList.add(new Message(10L, "user2", "user1", LocalDateTime.of(2020, 10, 8, 22, 25), "Good bye world!", "null"));
+        messageList.add(new Message(11L, "user1", "user2", LocalDateTime.of(2020, 10, 8, 22, 19), "Hello world!", "null"));
+        messageList.add(new Message(12L, "user2", "user1", LocalDateTime.of(2020, 10, 8, 22, 25), "Good bye world!", "null"));
+        messageList.add(new Message(13L, "user1", "user2", LocalDateTime.of(2020, 10, 8, 22, 19), "Hello world!", "null"));
+        messageList.add(new Message(14L, "user2", "user1", LocalDateTime.of(2020, 10, 8, 22, 25), "Good bye world!", "null"));
+        messageList.add(new Message(15L, "user1", "user2", LocalDateTime.of(2020, 10, 8, 22, 19), "Hello world!", "null"));
+        messageList.add(new Message(16L, "user2", "user1", LocalDateTime.of(2020, 10, 8, 22, 25), "Good bye world!", "null"));
+        messageList.add(new Message(17L, "user1", "user2", LocalDateTime.of(2020, 10, 8, 22, 19), "Hello world!", "null"));
+        messageList.add(new Message(18L, "user2", "user1", LocalDateTime.of(2020, 10, 8, 22, 25), "Good bye world!", "null"));
+        messageList.add(new Message(19L, "user1", "user2", LocalDateTime.of(2020, 10, 8, 22, 19), "Hello world!", "null"));
+        messageList.add(new Message(20L, "user2", "user1", LocalDateTime.of(2020, 10, 8, 22, 25), "Good bye world!", "null"));
         return messageList;
     }
 
@@ -112,5 +112,14 @@ public class MessageService {
                 return Comparator.comparing(Message::getMessageId);
         }
         return Comparator.comparing(Message::getTimeOfSend);
+    }
+
+    public Message showSelectedMessage(Long messageId) {
+        for (Message message : messageList) {
+            if (message.getMessageId().equals(messageId)){
+                return message;
+            }
+        }
+        return null;
     }
 }
