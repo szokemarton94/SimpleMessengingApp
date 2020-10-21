@@ -7,16 +7,19 @@
 <body>
 <h2>Message Details:</h2>
 <table>
+    <thead>
     <tr>
-        <td>MessageID</td>
-        <td>Author</td>
-        <td>Receiver</td>
-        <td>TimeOfSent</td>
-        <td>Topic</td>
-        <td>Message</td>
-        <td>IsFlaggedAsDeleted</td>
-        <td><a th:href="@{/messages}">Back</a></td>
+        <th>MessageID</th>
+        <th>Author</th>
+        <th>Receiver</th>
+        <th>TimeOfSent</th>
+        <th>Topic</th>
+        <th>Message</th>
+        <th>IsFlaggedAsDeleted</th>
+        <th><a th:href="@{/messages}">Back</a></th>
     </tr>
+    </thead>
+    <tbody>
     <tr>
         <td th:text="${message.messageId}"></td>
         <td th:text="${message.author}"></td>
@@ -26,6 +29,7 @@
         <td th:text="${message.message}"></td>
         <td th:text="${message.deleted}"></td>
     </tr>
+    </tbody>
 </table>
 </body>
 </html>

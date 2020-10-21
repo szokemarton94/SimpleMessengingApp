@@ -60,6 +60,7 @@ public class MessageController {
     ){
         return "newMessage";
     }
+
     /**
      * Add new Message to DB
      */
