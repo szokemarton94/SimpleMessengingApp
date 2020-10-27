@@ -1,9 +1,9 @@
-package application;
+package application.entity;
 
 import application.DTO.MessageDTO;
 
 import java.time.LocalDateTime;
-
+//TODO Entity-fy
 public class Message {
     //Variables
     private Long messageId;

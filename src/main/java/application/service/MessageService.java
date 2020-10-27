@@ -2,7 +2,7 @@ package application.service;
 
 
 import application.DTO.MessageDTO;
-import application.Message;
+import application.entity.Message;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;

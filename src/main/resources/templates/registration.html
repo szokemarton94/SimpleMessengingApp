@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01"
+            aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item ">
+                <a class="nav-link" href="#" data-th-href="@{/index}">HomePage</a>
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link" href="#" data-th-href="@{/messages}">Messages</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" data-th-href="@{/messages/new}">NewMessage</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav my-2 my-lg-0">
+            <li class="nav-item">
+                <a class="nav-link" href="#" data-sec-authorize="isAuthenticated()" th:href="@{/logout}">Logout</a>
+                <a class="nav-link" href="#" data-sec-authorize="!isAuthenticated()" th:href="@{/login}">Login</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<h2>Registration</h2>
+<p>Enter username and password</p>
+<form action="#" th:action="@{/createNewUser}" method="post">
+    <table>
+        <tr>
+            <td>username:</td>
+            <td><label>
+                <input type="text" id="username" name="username" value="username" placeholder="username"
+                       th:field="*{username}"/>
+            </label>
+            <td th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Message Error</td>
+        </tr>
+        <tr>
+            <td>password:</td>
+            <td><label>
+                <input type="text" id="password" name="password" value="password" placeholder="password"
+                       th:field="*{password}"/>
+            </label></td>
+            <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</td>
+        </tr>
+        <tr>
+            <td>confirmPassword :</td>
+            <td><label>
+                <input type="text" id="matchingPassword" name="matchingPassword" value="matchingPassword"
+                       placeholder="confirmPassword" th:field="*{matchingPassword}"/>
+            </label></td>
+            <td th:if="${#fields.hasErrors('matchingPassword')}" th:errors="*{matchingPassword}">Confirm password not
+                matching!
+            </td>
+        </tr>
+<!--        <tr>-->
+<!--            <td>email address:</td>-->
+<!--            <td><label>-->
+<!--                <input type="text" id="email" name="email" value="email" placeholder="email"-->
+<!--                       th:field="*{email}"/>-->
+<!--            </label></td>-->
+<!--            <td th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Not a proper e-mail address</td>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--            <td>date of birth</td>-->
+<!--            <td><label>-->
+<!--                <input type="date" id="dateOfBirth" name="*{dateOfBirth}" value="*{dateOfBirth}"-->
+<!--                       placeholder="dateOfBirth"-->
+<!--                       th:field="*{{dateOfBirth}}"/>-->
+<!--            </label></td>-->
+<!--            <td th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}">Not a proper birthdate</td>-->
+<!--        </tr>-->
+        <tr>
+            <td>
+                <button type="submit">Submit</button>
+            </td>
+        </tr>
+
+    </table>
+</form>
+</body>
+</html>
