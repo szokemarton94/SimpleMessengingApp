@@ -1,9 +1,12 @@
 package application.entity;
 
+import application.DTO.RegistrationDTO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -25,13 +28,24 @@ public class User implements UserDetails {
     private String lastName;
     @Column(name = "PHONE_NUMBER")
     private String phoneNumber;
-    @ManyToMany(mappedBy = "userList")
+
+    @ManyToMany(mappedBy = "userList", fetch = FetchType.EAGER) //to solve lazy initialization
     private List<Authority> authorities;
     //constructor
 
     public User() {
     }
 
+    public User(RegistrationDTO registrationDTO) {
+        this.userName = registrationDTO.getUserName();
+        this.password = registrationDTO.getPassword();
+    }
+
+    public User(String username, String encode, ArrayList<Authority> authorities) {
+        this.userName = username;
+        this.password = encode;
+        this.authorities = authorities;
+    }
     //getters & setters
 
     public Long getUserId() {
@@ -83,6 +97,9 @@ public class User implements UserDetails {
         this.authorities = authorities;
     }
 
+    public void addAuthority(Authority authority) {
+        this.authorities.add(authority);
+    }
 
     @Override
     public String getPassword() {

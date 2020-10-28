@@ -1,8 +1,9 @@
 package application.service;
 
 import application.entity.Authority;
+import application.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
+
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,7 +14,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class UserDetailsManagerService implements UserDetailsManager {
@@ -35,8 +35,9 @@ public class UserDetailsManagerService implements UserDetailsManager {
         userToTransact = new User(
                 user.getUsername(),
                 passwordEncoder.encode(user.getPassword()),
-                new ArrayList<Authority>()
+                new ArrayList<>()
         );
+        userToTransact.addAuthority(userDetailsManagerService.getAuthority("READER"));
         entityManager.persist(userToTransact);
 
     }
