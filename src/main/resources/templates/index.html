@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="en">
 <!--some stylish appearance - self branding-->
 <head>
     <meta charset="UTF-8"/>
     <title>HomePage</title>
-<!--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"-->
-<!--          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 </head>
 <body>
 <header>
@@ -36,8 +36,8 @@
         </ul>
         <ul class="navbar-nav my-2 my-lg-0">
             <li class="nav-item">
-                <a class="nav-link" href="#" data-sec-authorize="isAuthenticated()" th:href="@{/logout}">Logout</a>
-                <a class="nav-link" href="#" data-sec-authorize="!isAuthenticated()" th:href="@{/login}">Login</a>
+                <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/logout}">Logout</a>
+                <a class="nav-link" sec:authorize="!isAuthenticated()" th:href="@{/login}">Login</a>
             </li>
         </ul>
     </div>

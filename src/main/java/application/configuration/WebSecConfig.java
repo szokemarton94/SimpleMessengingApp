@@ -33,17 +33,33 @@ public class WebSecConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .authorizeRequests()
-                .antMatchers("/**").access("hasRole('READER')")
-                .antMatchers("/**")
+                //TODO csrf tokenS
+                .formLogin()
+                .loginPage("/login")
                 .permitAll()
+                .loginProcessingUrl("/loginProcess")
+                //TODO " " to "/index"
+//              .defaultSuccessUrl(" ")
+//              .failureUrl("/login?error=true")
 
                 .and()
 
-                .formLogin()
-                .loginPage("/login").permitAll()              //custom login page
-                .loginProcessingUrl("/loginProcess")//returns an object -> further methods use
-//                .failureUrl("/login?error=true")
+                //TODO logout
+
+                .authorizeRequests()
+                //for notAUTHENTICATED users these requests are enabled:
+                .antMatchers("/login","/registration","/createNewUser","/loginProcess")
+                .permitAll()
+                //for AUTHENTICATED users ALL request are enabled:
+                .anyRequest()
+                .authenticated();
+
+        //                .antMatchers("/**")
+//                .access("hasAuthority('USER')")
+
+
+
+
         ;
     }
 

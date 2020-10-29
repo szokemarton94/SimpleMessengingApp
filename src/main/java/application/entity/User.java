@@ -1,7 +1,6 @@
 package application.entity;
 
 import application.DTO.RegistrationDTO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -29,10 +28,17 @@ public class User implements UserDetails {
     @Column(name = "PHONE_NUMBER")
     private String phoneNumber;
 
-    @ManyToMany(mappedBy = "userList", fetch = FetchType.EAGER) //to solve lazy initialization
+    @ManyToMany(
+            cascade = {CascadeType.ALL},
+            fetch = FetchType.EAGER) //to solve lazy initialization
+//    @JoinTable(
+//            name = "USER_AUTHORITY",
+//            joinColumns = {@JoinColumn(name = "user_id")},
+//            inverseJoinColumns = {@JoinColumn(name = "authority_id")}
+//    )
     private List<Authority> authorities;
-    //constructor
 
+    //constructors
     public User() {
     }
 
@@ -97,6 +103,9 @@ public class User implements UserDetails {
         this.authorities = authorities;
     }
 
+    /**
+     * Function: add a new Authority object to the Authority List
+     */
     public void addAuthority(Authority authority) {
         this.authorities.add(authority);
     }
