@@ -72,5 +72,10 @@ public class MessageController {
         return "redirect:/messages";
     }
 
-
+//    @RequestMapping(value = "messages/flaggedAsDeleted", method = RequestMethod.PATCH)
+//    public String flagMessageAsDeleted(
+//
+//    ){
+//
+//    }
 }

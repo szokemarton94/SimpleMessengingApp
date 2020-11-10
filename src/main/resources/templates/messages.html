@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Messages</title>
-    <link rel="stylesheet" href="/static/css/messages.css">
+    <link rel="stylesheet" th:href="@{/css/messages.css}">
 </head>
 <body>
 <header>
-
+<!--<img src="" th:src="@{/images/mail.png}" alt="Icon" >-->
     <div class="navigation">
         <ul>
             <li>
@@ -23,11 +23,23 @@
                 <a data-th-href="@{/topics/showAllTopics}">Topics</a>
             </li>
         </ul>
-        <div>
+        <div class="authenticated_userOptions" sec:authorize="isAuthenticated()" >
             <ul class="login_logout">
                 <li>
-                    <a data-sec-authorize="isAuthenticated()" th:href="@{/logout}">Logout</a>
-                    <a data-sec-authorize="!isAuthenticated()" th:href="@{/login}">Login</a>
+                    <a th:href="@{/options}">Option</a>
+                </li>
+                <li>
+                    <a th:href="@{/logout}">Logout</a>
+                </li>
+            </ul>
+        </div>
+        <div sec:authorize="!isAuthenticated()" class="notAuthenticated_userOptions">
+            <ul>
+                <li>
+                    <a th:href="@{/registration}">Register</a>
+                </li>
+                <li>
+                    <a th:href="@{/login}">Login</a>
                 </li>
             </ul>
         </div>
@@ -61,7 +73,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <button type="submit" class="btn btn-primary">Search</button>
+                        <button type="submit">Search</button>
                     </td>
                 </tr>
             </table>
@@ -76,8 +88,8 @@
                 <td>DateAndTime</td>
                 <td>Topic</td>
                 <td>Message</td>
-                <!--        <td data-sec-authorize="hasRole('ADMIN')"> isDeleted</td>-->
-                <!--        <td data-sec-authorize="hasRole('ADMIN')">Delete</td>-->
+                <td sec:authorize="hasRole('ADMIN')"> isFlaggedAsDeleted</td>
+                <td sec:authorize="hasRole('ADMIN')">Delete</td>
             </tr>
             <tr data-th-each="m: ${messageList}">
                 <td data-th-text="${m.messageId}"></td>
@@ -86,25 +98,18 @@
                 <td data-th-text="${m.timeOfSending}"></td>
                 <td data-th-text="${m.subject}"></td>
                 <td data-th-text="${m.message}"></td>
-                <td data-th-text="${m.deleted}"></td>
-                <td><a data-th-href="@{messages/{messageId}(messageId = ${m.messageId})}">View message Details
-                </a>
+                <td th:text="${m.isFlaggedAsDeleted()}"></td>
+                <!--                        sec:authorize="hasRole('ADMIN')" -->
+                <td th:action="@{/flagAsDeleted}"></td>
+                <td><a data-th-href="@{messages/{messageId}(messageId = ${m.messageId})}">View message Details</a></td>
             </tr>
-            <!--    <tr  data-th-each="m: ${messageList}" th:if="${!m.isFlaggedAsDeleted()}">-->
-            <!--        <td data-th-text="${m.messageId}"></td>-->
-            <!--        <td data-th-text="${m.author}"></td>-->
-            <!--        <td data-th-text="${{m.dateTime}}"></td>-->
-            <!--        <td data-th-text="${m.message}"></td>-->
-            <!--        <td data-th-text="${m.topic.topicName}"></td>-->
-            <!--        <td><a data-th-href="@{/show/{id}(id=${m.messageId})}">View message separately</a></td>-->
-            <!--    </tr>-->
         </table>
     </section>
 </main>
 <footer>
 
 </footer>
-<script src = /static/js/messages.js>
+<script src=/static/js/messages.js>
 </script>
 </body>
 </html>

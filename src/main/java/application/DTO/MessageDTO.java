@@ -1,5 +1,7 @@
 package application.DTO;
 
+import org.springframework.security.core.context.SecurityContextHolder;
+
 import java.time.LocalDateTime;
 
 public class MessageDTO {
@@ -12,8 +14,7 @@ public class MessageDTO {
 
     //Constructor
     public MessageDTO(String recipient, String subject, String message) {
-        //TODO - change it to current logged in user
-        this.author = "user1";
+        this.author = SecurityContextHolder.getContext().getAuthentication().getName();
         this.recipient = recipient;
         this.subject = subject;
         this.message = message;

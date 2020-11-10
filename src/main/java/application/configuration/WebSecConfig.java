@@ -46,7 +46,6 @@ public class WebSecConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .loginProcessingUrl("/loginProcess")
                 .defaultSuccessUrl("/index", true)
-//              .failureUrl("/login?error=true")
 
                 .and()
 //LOGOUT
@@ -63,7 +62,7 @@ public class WebSecConfig extends WebSecurityConfigurerAdapter {
 //AUTHORIZATION
                 .authorizeRequests()
                 //for notAUTHENTICATED users these requests are enabled:
-                .antMatchers("/index", "/login", "/registration", "/createNewUser", "/loginProcess", "/static/**", "/logoutSuccess", "/customLogout")
+                .antMatchers("/index", "/login", "/registration", "/createNewUser", "/loginProcess", "/resources/static/**", "/logoutSuccess", "/customLogout")
                 .permitAll()
                 //for AUTHENTICATED users ALL request are enabled:
                 .anyRequest()

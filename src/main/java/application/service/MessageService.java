@@ -3,8 +3,11 @@ package application.service;
 
 import application.DTO.MessageDTO;
 import application.entity.Message;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -14,53 +17,23 @@ import java.util.stream.Collectors;
 @Service
 public class MessageService {
     //Variables
-    private List<Message> messageList;
+    EntityManager entityManager;
 
-    //Controller
-    public MessageService() {
-        this.messageList = messageListCreator();
+    //Constructor
+    @Autowired
+    public MessageService(EntityManager entityManager) {
+        this.entityManager = entityManager;
     }
 
-    //Getter & Setter Functions
-    public List<Message> getMessageList() {
-        return messageList;
-    }
-
-    public void setMessageList(List<Message> messageList) {
-        this.messageList = messageList;
-    }
 
     //Functions
-    private List<Message> messageListCreator() {
-        List<Message> messageList = new ArrayList<>();
-        messageList.add(new Message(1L, "user1", "user2", LocalDateTime.of(2020, 10, 8, 22, 19), "Hello world!", "null"));
-        messageList.add(new Message(2L, "user2", "user1", LocalDateTime.of(2020, 10, 8, 22, 25), "Good bye world!", "null"));
-        messageList.add(new Message(3L, "user3", "user2", LocalDateTime.of(2020, 10, 8, 22, 19), "Hello world!", "null"));
-        messageList.add(new Message(4L, "user4", "user1", LocalDateTime.of(2020, 10, 8, 22, 25), "Good bye world!", "null"));
-        messageList.add(new Message(5L, "user5", "user2", LocalDateTime.of(2020, 10, 8, 22, 19), "Hello world!", "null"));
-        messageList.add(new Message(6L, "user6", "user1", LocalDateTime.of(2020, 10, 8, 22, 25), "Good bye world!", "null"));
-        messageList.add(new Message(7L, "user7", "user2", LocalDateTime.of(2020, 10, 8, 22, 19), "Hello world!", "null"));
-        messageList.add(new Message(8L, "user2", "user1", LocalDateTime.of(2020, 10, 8, 22, 25), "Good bye world!", "null"));
-        messageList.add(new Message(9L, "user1", "user2", LocalDateTime.of(2020, 10, 8, 22, 19), "Hello world!", "null"));
-        messageList.add(new Message(10L, "user2", "user1", LocalDateTime.of(2020, 10, 8, 22, 25), "Good bye world!", "null"));
-        messageList.add(new Message(11L, "user1", "user2", LocalDateTime.of(2020, 10, 8, 22, 19), "Hello world!", "null"));
-        messageList.add(new Message(12L, "user2", "user1", LocalDateTime.of(2020, 10, 8, 22, 25), "Good bye world!", "null"));
-        messageList.add(new Message(13L, "user1", "user2", LocalDateTime.of(2020, 10, 8, 22, 19), "Hello world!", "null"));
-        messageList.add(new Message(14L, "user2", "user1", LocalDateTime.of(2020, 10, 8, 22, 25), "Good bye world!", "null"));
-        messageList.add(new Message(15L, "user1", "user2", LocalDateTime.of(2020, 10, 8, 22, 19), "Hello world!", "null"));
-        messageList.add(new Message(16L, "user2", "user1", LocalDateTime.of(2020, 10, 8, 22, 25), "Good bye world!", "null"));
-        messageList.add(new Message(17L, "user1", "user2", LocalDateTime.of(2020, 10, 8, 22, 19), "Hello world!", "null"));
-        messageList.add(new Message(18L, "user2", "user1", LocalDateTime.of(2020, 10, 8, 22, 25), "Good bye world!", "null"));
-        messageList.add(new Message(19L, "user1", "user2", LocalDateTime.of(2020, 10, 8, 22, 19), "Hello world!", "null"));
-        messageList.add(new Message(20L, "user2", "user1", LocalDateTime.of(2020, 10, 8, 22, 25), "Good bye world!", "null"));
-        return messageList;
-    }
+
 
     /**
      * Returns with "List<Message>" arranged by "arguments"
      **/
     public List<Message> getArrangedMessageList(Integer limit, String orderBy, String direction) {
-        List<Message> currentMessageList = getMessageList();
+        List<Message> currentMessageList = entityManager.createQuery("SELECT messages FROM Message messages", Message.class).getResultList();
 
         currentMessageList = setValueOrderBy(orderBy, direction, currentMessageList);
         currentMessageList = limitReturnList(limit, currentMessageList);
@@ -116,20 +89,17 @@ public class MessageService {
     /**
      * Returns with selected "Message" from DB by "messageId"
      **/
+    @Transactional
     public Message showSelectedMessage(Long messageId) {
-        for (Message message : messageList) {
-            if (message.getMessageId().equals(messageId)) {
-                return message;
-            }
-        }
-        return null;
+        return entityManager.find(Message.class,messageId);
     }
 
     /**
      * Add a new Message to DataBase
      **/
+    @Transactional
     public void addNewMessageToDataBase(MessageDTO messageDTO) {
         Message messageToAdd = new Message(messageDTO);
-        this.messageList.add(messageToAdd);
+        entityManager.persist(messageToAdd);
     }
 }

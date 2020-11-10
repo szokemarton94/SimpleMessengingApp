@@ -14,42 +14,39 @@ public class Message {
     private Long messageId;
     @Column(name = "AUTHOR")
     private String author;
-    //TODO - more than 1 recipient
-    @Column(name = "RECIPIENT" )
+    //TODO - more than 1 recipient?
+    @Column(name = "RECIPIENT")
     private String recipient;
     @Column(name = "TIME_OF_SENDING")
     private LocalDateTime timeOfSending;
-    @Column(name = "MESSAGE" )
+    @Column(name = "MESSAGE")
     private String message;
-    @Column(name = "SUBJECT" )
+    @Column(name = "SUBJECT")
     private String subject;
     @Column(name = "IS_DELETED")
-    private Boolean isDeleted;
+    private Boolean isFlaggedAsDeleted;
 
     //Constructors
     public Message() {
     }
 
-    public Message(Long messageId, String author, String recipient, LocalDateTime timeOfSending, String message, String subject) {
-        this.messageId = messageId;
+    public Message( String author, String recipient, LocalDateTime timeOfSending, String message, String subject) {
         this.author = author;
         this.recipient = recipient;
         this.timeOfSending = timeOfSending;
         this.message = message;
         this.subject = subject;
-        this.isDeleted = false;
+        this.isFlaggedAsDeleted = false;
     }
 
     public Message(MessageDTO messageDTO) {
-        this.messageId = (long) (Math.random() * 100);
         this.author = messageDTO.getAuthor();
         this.recipient = messageDTO.getRecipient();
         this.timeOfSending = messageDTO.getTimeOfSending();
         this.message = messageDTO.getMessage();
         this.subject = messageDTO.getSubject();
-        this.isDeleted = false;
+        this.isFlaggedAsDeleted = false;
     }
-
 
 
     //Getter and Setter functions
@@ -101,11 +98,11 @@ public class Message {
         this.subject = subject;
     }
 
-    public Boolean getDeleted() {
-        return isDeleted;
+    public Boolean isFlaggedAsDeleted() {
+        return isFlaggedAsDeleted;
     }
 
-    public void setDeleted(Boolean deleted) {
-        isDeleted = deleted;
+    public void setFlaggedAsDeleted(Boolean isFlaggedAsDeleted) {
+        isFlaggedAsDeleted = true;
     }
 }
