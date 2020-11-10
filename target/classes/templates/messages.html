@@ -1,111 +1,110 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-<!--same style list my messages -->
-<!--options to sort messages-->
 <head>
     <meta charset="UTF-8">
     <title>Messages</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/css/messages.css">
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01"
-            aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-            <li class="nav-item ">
-                <a class="nav-link" data-th-href="@{/index}">Home</a>
+<header>
+
+    <div class="navigation">
+        <ul>
+            <li>
+                <a data-th-href="@{/index}">Home</a>
             </li>
-            <li class="nav-item ">
-                <!--TODO: MyMessages-->
-                <a class="nav-link" href="#" data-th-href="@{/messages}">Messages</a>
+            <li>
+                <a data-th-href="@{/messages}">Messages</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#" data-th-href="@{/messages/new}">NewMessage</a>
+            <li>
+                <a data-th-href="@{/messages/new}">NewMessage</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#" data-th-href="@{/topics/showAllTopics}">Topics</a>
-            </li>
-            <!--            <li class="nav-item ">-->
-            <!--                <a class="nav-link" href="#" data-th-href="@{/modifymessage}">ModifyMessage</a>-->
-            <!--            </li>-->
-        </ul>
-        <ul class="navbar-nav my-2 my-lg-0">
-            <li class="nav-item">
-                <a class="nav-link" href="#" data-sec-authorize="isAuthenticated()" th:href="@{/logout}">Logout</a>
-                <a class="nav-link" href="#" data-sec-authorize="!isAuthenticated()" th:href="@{/login}">Login</a>
+            <li>
+                <a data-th-href="@{/topics/showAllTopics}">Topics</a>
             </li>
         </ul>
+        <div>
+            <ul class="login_logout">
+                <li>
+                    <a data-sec-authorize="isAuthenticated()" th:href="@{/logout}">Logout</a>
+                    <a data-sec-authorize="!isAuthenticated()" th:href="@{/login}">Login</a>
+                </li>
+            </ul>
+        </div>
     </div>
-</nav>
-<!--form to fill out-->
-<form th:action="@{/messages}" method="get">
-    <table>
-        <tr>
-            <td>
-                <label for="limit"> Limit<!--"for" - reference for "id"-->
-                    <input type="number" id="limit" name="limit">
-                </label>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <label for="orderBy">OrderByValue
-                    <input type="text" id="orderBy" name="orderBy">
-                </label>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <label for="direction">Direction
-                    <input type="text" id="direction" name="direction">
-                </label>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <button type="submit" class="btn btn-primary">Search</button>
-            </td>
-        </tr>
+</header>
 
-    </table>
-</form>
+<main>
+    <section>
+        <form th:action="@{/messages}" method="get">
+            <table>
+                <tr>
+                    <td>
+                        <label for="limit"> Limit <!--"for" - reference for "id"-->
+                            <input type="number" id="limit" name="limit">
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="orderBy">OrderByValue
+                            <input type="text" id="orderBy" name="orderBy">
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="direction">Direction
+                            <input type="text" id="direction" name="direction">
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </section>
+    <section>
+        <table>
+            <tr>
+                <td>MessageId</td>
+                <td>Sender</td>
+                <td>Receiver</td>
+                <td>DateAndTime</td>
+                <td>Topic</td>
+                <td>Message</td>
+                <!--        <td data-sec-authorize="hasRole('ADMIN')"> isDeleted</td>-->
+                <!--        <td data-sec-authorize="hasRole('ADMIN')">Delete</td>-->
+            </tr>
+            <tr data-th-each="m: ${messageList}">
+                <td data-th-text="${m.messageId}"></td>
+                <td data-th-text="${m.author}"></td>
+                <td data-th-text="${m.recipient}"></td>
+                <td data-th-text="${m.timeOfSending}"></td>
+                <td data-th-text="${m.subject}"></td>
+                <td data-th-text="${m.message}"></td>
+                <td data-th-text="${m.deleted}"></td>
+                <td><a data-th-href="@{messages/{messageId}(messageId = ${m.messageId})}">View message Details
+                </a>
+            </tr>
+            <!--    <tr  data-th-each="m: ${messageList}" th:if="${!m.isFlaggedAsDeleted()}">-->
+            <!--        <td data-th-text="${m.messageId}"></td>-->
+            <!--        <td data-th-text="${m.author}"></td>-->
+            <!--        <td data-th-text="${{m.dateTime}}"></td>-->
+            <!--        <td data-th-text="${m.message}"></td>-->
+            <!--        <td data-th-text="${m.topic.topicName}"></td>-->
+            <!--        <td><a data-th-href="@{/show/{id}(id=${m.messageId})}">View message separately</a></td>-->
+            <!--    </tr>-->
+        </table>
+    </section>
+</main>
+<footer>
 
-
-<!-- row containing the elements   -->
-<table>
-    <tr> <!--defines a ROW of CELLs in a table-->
-        <td>MessageId</td> <!--defines a CELL of a table that contains data.-->
-        <td>Sender</td>
-        <td>Receiver</td>
-        <td>DateAndTime</td>
-        <td>Topic</td>
-        <td>Message</td>
-        <!--        <td data-sec-authorize="hasRole('ADMIN')"> isDeleted</td>-->
-        <!--        <td data-sec-authorize="hasRole('ADMIN')">Delete</td>-->
-    </tr>
-    <tr data-th-each="m: ${messageList}">
-        <td data-th-text="${m.messageId}"></td>
-        <td data-th-text="${m.author}"></td>
-        <td data-th-text="${m.recipient}"></td>
-        <td data-th-text="${m.timeOfSending}"></td>
-        <td data-th-text="${m.subject}"></td>
-        <td data-th-text="${m.message}"></td>
-        <td data-th-text="${m.deleted}"></td>
-        <td><a data-th-href="@{messages/{messageId}(messageId = ${m.messageId})}">View message Details
-        </a>
-    </tr>
-    <!--    <tr  data-th-each="m: ${messageList}" th:if="${!m.isFlaggedAsDeleted()}">-->
-    <!--        <td data-th-text="${m.messageId}"></td>-->
-    <!--        <td data-th-text="${m.author}"></td>-->
-    <!--        <td data-th-text="${{m.dateTime}}"></td>-->
-    <!--        <td data-th-text="${m.message}"></td>-->
-    <!--        <td data-th-text="${m.topic.topicName}"></td>-->
-    <!--        <td><a data-th-href="@{/show/{id}(id=${m.messageId})}">View message separately</a></td>-->
-    <!--    </tr>-->
-</table>
+</footer>
+<script src = /static/js/messages.js>
+</script>
 </body>
 </html>

@@ -51,6 +51,7 @@ public class UserDetailsManagerService implements UserDetailsManager {
     @Override
     @Transactional
     public void updateUser(UserDetails user) {
+        //TODO
         User changedDetails = new User((RegistrationDTO) user);
     }
 

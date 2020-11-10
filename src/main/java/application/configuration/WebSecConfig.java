@@ -13,14 +13,20 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.persistence.EntityManager;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecConfig extends WebSecurityConfigurerAdapter {
-    @Autowired
+
     EntityManager entityManager;
+
+    @Autowired
+    public WebSecConfig(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
 
     /**
      * Encoder
@@ -33,34 +39,37 @@ public class WebSecConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                //TODO csrf tokenS
+//LOGIN
+                //TODO csrf token
                 .formLogin()
                 .loginPage("/login")
                 .permitAll()
                 .loginProcessingUrl("/loginProcess")
-                //TODO " " to "/index"
-//              .defaultSuccessUrl(" ")
+                .defaultSuccessUrl("/index", true)
 //              .failureUrl("/login?error=true")
 
                 .and()
+//LOGOUT
+                //TODO make it POST, this is vulnerable to csrf
+                .logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
+                .logoutSuccessUrl("/index")
+//                .deleteCookies("remove")
+//                .invalidateHttpSession(true)
+//                .logoutUrl("/logout")//
+//                .logoutSuccessUrl("/login")
 
-                //TODO logout
-
+                .and()
+//AUTHORIZATION
                 .authorizeRequests()
                 //for notAUTHENTICATED users these requests are enabled:
-                .antMatchers("/login","/registration","/createNewUser","/loginProcess")
+                .antMatchers("/index", "/login", "/registration", "/createNewUser", "/loginProcess", "/static/**", "/logoutSuccess", "/customLogout")
                 .permitAll()
                 //for AUTHENTICATED users ALL request are enabled:
                 .anyRequest()
                 .authenticated();
-
         //                .antMatchers("/**")
-//                .access("hasAuthority('USER')")
-
-
-
-
-        ;
+        //                .access("hasAuthority('USER')")
     }
 
 }
