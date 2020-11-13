@@ -2,12 +2,14 @@ package application.service;
 
 
 import application.DTO.MessageDTO;
+import application.entity.Connection;
 import application.entity.Message;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -77,7 +79,7 @@ public class MessageService {
      * Returns with selected "Message" from DB by "messageId"
      */
     public Message showSelectedMessage(Long messageId) {
-        return entityManager.find(Message.class,messageId);
+        return entityManager.find(Message.class, messageId);
     }
 
     /**
@@ -86,6 +88,22 @@ public class MessageService {
     @Transactional
     public void addNewMessageToDataBase(MessageDTO messageDTO) {
         Message messageToAdd = new Message(messageDTO);
+        //Ask if DB has conversation between sender and replier
+        //if (true) -> add to the conversation
+        //else -> create a new conversation
+        List<Connection> connectionList = entityManager.createQuery("SELECT Connection FROM Connection " +
+                "WHERE Connection .guest.userId =: guestUserName " +
+                "AND Connection .owner.userName =: ownerUserName", Connection.class)
+                .setParameter("guestUserName", messageDTO.getRecipient())
+                .setParameter("ownerUserName", messageDTO.getAuthor()).getResultList();
+        if (connectionList.size() >0){
+            for (Connection connection : connectionList) {
+                connection.addMessage(messageToAdd);
+                entityManager.persist(connection);
+            }
+        }else {
+            //create new Connection, add it to both end, persist
+        }
         entityManager.persist(messageToAdd);
     }
 }

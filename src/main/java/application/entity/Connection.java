@@ -54,4 +54,8 @@ public class Connection {
     public void setMessages(List<Message> messages) {
         this.messages = messages;
     }
+
+    public void addMessage(Message newMessage) {
+        this.messages.add(newMessage);
+    }
 }
