@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <title>MessageDetails</title>
@@ -15,8 +15,8 @@
         <th>TimeOfSent</th>
         <th>Topic</th>
         <th>Message</th>
-        <th>IsFlaggedAsDeleted</th>
-        <th><a th:href="@{/messages}">Back</a></th>
+        <th sec:authorize="hasRole('ADMIN')">IsFlaggedAsDeleted </th>
+        <th><a th:href="@{/messages}" >Back</a></th>
     </tr>
     </thead>
     <tbody>
@@ -27,7 +27,7 @@
         <td th:text="${message.timeOfSending}"></td>
         <td th:text="${message.subject}"></td>
         <td th:text="${message.message}"></td>
-        <td th:text="${message.deleted}"></td>
+        <td th:text="${message.isFlaggedAsDeleted()}" sec:authorize="hasRole('ADMIN')"></td>
     </tr>
     </tbody>
 </table>

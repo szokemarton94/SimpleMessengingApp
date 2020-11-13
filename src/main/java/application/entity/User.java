@@ -28,14 +28,12 @@ public class User implements UserDetails {
     @Column(name = "PHONE_NUMBER")
     private String phoneNumber;
 
+    @OneToMany
+    private List<Connection> connectionList;
+
     @ManyToMany(
             cascade = {CascadeType.ALL},
             fetch = FetchType.EAGER) //to solve lazy initialization
-//    @JoinTable(
-//            name = "USER_AUTHORITY",
-//            joinColumns = {@JoinColumn(name = "user_id")},
-//            inverseJoinColumns = {@JoinColumn(name = "authority_id")}
-//    )
     private List<Authority> authorities;
 
     //constructors

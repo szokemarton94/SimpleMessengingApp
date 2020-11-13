@@ -16,17 +16,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecConfig extends WebSecurityConfigurerAdapter {
 
+    @PersistenceContext
     EntityManager entityManager;
-
-    @Autowired
-    public WebSecConfig(EntityManager entityManager) {
-        this.entityManager = entityManager;
-    }
+    
 
     /**
      * Encoder

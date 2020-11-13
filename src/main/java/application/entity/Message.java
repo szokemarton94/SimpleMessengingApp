@@ -7,7 +7,6 @@ import java.time.LocalDateTime;
 
 @Entity
 public class Message {
-    //Variables
     @Id
     @Column(name = "MESSAGE_ID")
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,7 +25,6 @@ public class Message {
     @Column(name = "IS_DELETED")
     private Boolean isFlaggedAsDeleted;
 
-    //Constructors
     public Message() {
     }
 
