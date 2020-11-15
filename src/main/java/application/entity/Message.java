@@ -38,6 +38,7 @@ public class Message {
     }
 
     public Message(MessageDTO messageDTO) {
+//        messageDTO!=null?this.messageId=messageDTO.messageId:
         this.author = messageDTO.getAuthor();
         this.recipient = messageDTO.getRecipient();
         this.timeOfSending = messageDTO.getTimeOfSending();
@@ -46,6 +47,15 @@ public class Message {
         this.isFlaggedAsDeleted = false;
     }
 
+    public Message(Message messageDTO) {
+        this.messageId = messageId;
+        this.author = messageDTO.getAuthor();
+        this.recipient = messageDTO.getRecipient();
+        this.timeOfSending = messageDTO.getTimeOfSending();
+        this.message = messageDTO.getMessage();
+        this.subject = messageDTO.getSubject();
+        this.isFlaggedAsDeleted = false;
+    }
 
     //Getter and Setter functions
     public String getAuthor() {

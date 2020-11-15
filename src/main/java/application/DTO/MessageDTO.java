@@ -14,6 +14,7 @@ public class MessageDTO {
 
     //Constructor
     public MessageDTO(String recipient, String subject, String message) {
+//        this.messageId =
         this.author = SecurityContextHolder.getContext().getAuthentication().getName();
         this.recipient = recipient;
         this.subject = subject;

@@ -26,9 +26,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="#" data-th-href="@{/topics/showAllTopics}">Topics</a>
             </li>
-            <!--            <li class="nav-item ">-->
-            <!--                <a class="nav-link" href="#" data-th-href="@{/modifymessage}">ModifyMessage</a>-->
-            <!--            </li>-->
+
         </ul>
         <ul class="navbar-nav my-2 my-lg-0">
             <li class="nav-item">
@@ -40,11 +38,6 @@
 </nav>
 <form action="#" th:action="@{/messages/new/add}" th:object="${messageDTO}" method="post">
     <table>
-        <!--    <tr>-->
-        <!--        <td>Author:<label>-->
-        <!--            <input id="author" th:field="*{author}"/>-->
-        <!--        </label>-->
-        <!--    </tr>-->
         <tr>
             <td>Recipient:<label>
                 <input type="text" id="recipients" name="recipients" value="Recipients" th:field="*{recipient}"/>

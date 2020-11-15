@@ -88,8 +88,9 @@
                 <td>DateAndTime</td>
                 <td>Topic</td>
                 <td>Message</td>
-                <td sec:authorize="hasRole('ADMIN')"> isFlaggedAsDeleted</td>
-                <td sec:authorize="hasRole('ADMIN')">Delete</td>
+<!--                sec:authorize="hasRole('ADMIN')"-->
+                <td> isFlaggedAsDeleted</td>
+                <td>Delete</td>
             </tr>
             <tr data-th-each="m: ${messageList}">
                 <td data-th-text="${m.messageId}"></td>
@@ -102,6 +103,7 @@
                 <!--                        sec:authorize="hasRole('ADMIN')" -->
                 <td th:action="@{/flagAsDeleted}"></td>
                 <td><a data-th-href="@{messages/{messageId}(messageId = ${m.messageId})}">View message Details</a></td>
+                <td><a th:href="@{messages/flagMessageAsDeleted/{messageId}(messageId = ${m.messageId})}" methods="PATCH">Delete</a></td>
             </tr>
         </table>
     </section>

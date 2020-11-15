@@ -46,18 +46,18 @@ public class MessageController {
      */
     @RequestMapping(value = "/messages/{messageId}", method = RequestMethod.GET)
     public String showMessageDetails(
-        @PathVariable("messageId") Long messageId, Model model){
-            model.addAttribute("message", messageService.showSelectedMessage(messageId));
-            return "messageDetail";
+            @PathVariable("messageId") Long messageId, Model model) {
+        model.addAttribute("message", messageService.showSelectedMessage(messageId));
+        return "messageDetail";
     }
 
     /**
      * Show "NewMessage" page
      */
-    @RequestMapping(value="/messages/new", method = RequestMethod.GET)
+    @RequestMapping(value = "/messages/new", method = RequestMethod.GET)
     public String showNewMessage(
             @ModelAttribute("messageDTO") MessageDTO messageDTO
-    ){
+    ) {
         return "newMessage";
     }
 
@@ -67,15 +67,16 @@ public class MessageController {
     @RequestMapping(value = "/messages/new/add", method = RequestMethod.POST)
     public String addNewMessageToDataBase(
             @ModelAttribute MessageDTO messageDto
-    ){
+    ) {
         messageService.addNewMessageToDataBase(messageDto);
         return "redirect:/messages";
     }
 
-//    @RequestMapping(value = "messages/flaggedAsDeleted", method = RequestMethod.PATCH)
-//    public String flagMessageAsDeleted(
-//
-//    ){
-//
-//    }
+    @RequestMapping(value = "messages/flagMessageAsDeleted/{messageId}", method = RequestMethod.GET)
+    public String flagMessageAsDeleted(
+            @PathVariable("messageId") Long messageId) {
+         messageService.setMessageAsDeleted(messageId);
+        return "redirect:/messages";
+
+    }
 }

@@ -3,6 +3,8 @@ package application.service;
 
 import application.DTO.MessageDTO;
 import application.entity.Message;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
@@ -21,8 +23,14 @@ public class MessageService {
      * Returns with "List<Message>" arranged by "arguments"
      **/
     public List<Message> getArrangedMessageList(Integer limit, String orderBy, String direction) {
+        String userName = SecurityContextHolder.getContext().getAuthentication().getName();
         List<Message> currentMessageList =
-                entityManager.createQuery("SELECT messages FROM Message messages", Message.class).getResultList();
+                entityManager.createQuery("SELECT messages " +
+                        "FROM Message messages " +
+                        "WHERE messages.author =: userName " +
+                        "OR messages.recipient =: userName", Message.class)
+                        .setParameter("userName", userName)
+                        .getResultList();
         currentMessageList = setValueOrderBy(orderBy, direction, currentMessageList);
         currentMessageList = limitReturnList(limit, currentMessageList);
         return currentMessageList;
@@ -77,7 +85,7 @@ public class MessageService {
      * Returns with selected "Message" from DB by "messageId"
      */
     public Message showSelectedMessage(Long messageId) {
-        return entityManager.find(Message.class,messageId);
+        return entityManager.find(Message.class, messageId);
     }
 
     /**
@@ -87,5 +95,14 @@ public class MessageService {
     public void addNewMessageToDataBase(MessageDTO messageDTO) {
         Message messageToAdd = new Message(messageDTO);
         entityManager.persist(messageToAdd);
+    }
+
+    @Transactional
+    public void setMessageAsDeleted(Long messageId){
+       Message selectedMessage =  entityManager.find(Message.class,messageId);
+       selectedMessage.setFlaggedAsDeleted(true);
+       //TODO not working solve it nicely
+       Message returnMessage = new Message(selectedMessage);
+       entityManager.merge(selectedMessage);
     }
 }
