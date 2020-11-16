@@ -3,6 +3,8 @@ package application.service;
 
 import application.DTO.MessageDTO;
 import application.entity.Message;
+import application.interfaces.MessageRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -12,10 +14,15 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 public class MessageService {
+
+    @Autowired
+    MessageRepository messageRepository;
+
     @PersistenceContext
     EntityManager entityManager;
 
@@ -25,17 +32,13 @@ public class MessageService {
     public List<Message> getArrangedMessageList(Integer limit, String orderBy, String direction) {
         String userName = SecurityContextHolder.getContext().getAuthentication().getName();
         List<Message> currentMessageList =
-                entityManager.createQuery("SELECT messages " +
-                        "FROM Message messages " +
-                        "WHERE messages.author =: userName " +
-                        "OR messages.recipient =: userName", Message.class)
-                        .setParameter("userName", userName)
-                        .getResultList();
+                messageRepository.findAllByAuthorAndIsFlaggedAsDeletedOrderByAuthor(userName, false);
         currentMessageList = setValueOrderBy(orderBy, direction, currentMessageList);
         currentMessageList = limitReturnList(limit, currentMessageList);
         return currentMessageList;
     }
 
+    //TODO put it on the server side with repository querys
     private List<Message> setValueOrderBy(String orderBy, String direction, List<Message> currentMessageList) {
         Comparator<Message> comparing = orderByComparator(orderBy);
         if (direction.equals("asc")) {
@@ -82,14 +85,14 @@ public class MessageService {
     }
 
     /**
-     * Returns with selected "Message" from DB by "messageId"
+     * Returns selected "Message"
      */
     public Message showSelectedMessage(Long messageId) {
-        return entityManager.find(Message.class, messageId);
+        return messageRepository.findById(messageId).orElse(null);
     }
 
     /**
-     * Add a new Message to DataBase
+     * Add a new Message
      */
     @Transactional
     public void addNewMessageToDataBase(MessageDTO messageDTO) {
@@ -97,12 +100,23 @@ public class MessageService {
         entityManager.persist(messageToAdd);
     }
 
-    @Transactional
-    public void setMessageAsDeleted(Long messageId){
-       Message selectedMessage =  entityManager.find(Message.class,messageId);
-       selectedMessage.setFlaggedAsDeleted(true);
-       //TODO not working solve it nicely
-       Message returnMessage = new Message(selectedMessage);
-       entityManager.merge(selectedMessage);
+    /**
+     * Set selected "Message" as "flaggedAsDeleted"
+     */
+    public void setMessageAsDeleted(Long messageId) {
+
+//       Message selectedMessage =  entityManager.find(Message.class,messageId);
+//       selectedMessage.setFlaggedAsDeleted(true);
+//
+//       Message returnMessage = new Message(selectedMessage);
+//       entityManager.merge(selectedMessage);
+    }
+
+    /**
+     * Req: AdminAuth
+     * Delete Message from database
+     */
+    public void deleteMessageFromCb(Long messageId) {
+        messageRepository.deleteById(messageId);
     }
 }
